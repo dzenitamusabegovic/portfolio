@@ -18,16 +18,16 @@ const SITE = {
   ],
 
   toolkit: [
-    ["Placeholder", "#b5643c"], ["Skill two", "#7d8a6a"], ["Skill three", "#c99a6b"],
-    ["Tool four", "#5f6b4a"], ["Tool five", "#9c6b4e"], ["Skill six", "#a8a07a"],
-    ["Tool seven", "#8a5a44"], ["Skill eight", "#6f7d6b"],
+    ["Placeholder", "#7a2238"], ["Skill two", "#5f7a45"], ["Skill three", "#b8893a"],
+    ["Tool four", "#6e2a4f"], ["Tool five", "#d9a5a8"], ["Skill six", "#3f5a34"],
+    ["Tool seven", "#9b3b52"], ["Skill eight", "#8a6a3a"],
   ],
 
   projects: [
-    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#c9a27e", "#b5643c", "#efe3d0"] },
-    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#9aa386", "#5f6b4a", "#e8e4d4"] },
-    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#d8b48c", "#8a5a44", "#f3e7d3"] },
-    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#7d6a58", "#c99a6b", "#e9dcc7"] },
+    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#5f7a45", "#7a2238", "#d9a5a8"] },
+    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#7a2238", "#3f5a34", "#e9c9c3"] },
+    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#d9a5a8", "#6e2a4f", "#f4e6dc"] },
+    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#3f5a34", "#b8893a", "#e3d3b8"] },
   ],
 
   experience: [
@@ -76,7 +76,7 @@ function toggleTheme() {
   const next = root.dataset.theme === "light" ? "dark" : "light";
   root.dataset.theme = next;
   try { localStorage.setItem("theme", next); } catch {}
-  document.querySelector('meta[name="theme-color"]').content = next === "light" ? "#f4efe6" : "#1c1815";
+  document.querySelector('meta[name="theme-color"]').content = next === "light" ? "#f6efe6" : "#2a1519";
 }
 $("#themeToggle").addEventListener("click", toggleTheme);
 
@@ -211,7 +211,7 @@ $$(".count").forEach((el) => countIO.observe(el));
       <div class="project-media">
         <svg class="art" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="320" height="200" fill="${p.art[0]}"/>
-          <circle cx="235" cy="70" r="34" fill="${p.art[2]}" opacity=".85"/>
+          <path d="M240 34 L247 66 L274 72 L247 78 L240 110 L233 78 L206 72 L233 66 Z" fill="#c9a14a"/>
           <path d="M40 200V120a70 70 0 0 1 140 0v80z" fill="${p.art[1]}"/>
           <path d="M150 200v-50a45 45 0 0 1 90 0v50z" fill="${p.art[2]}" opacity=".55"/>
         </svg>
