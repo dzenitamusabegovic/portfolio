@@ -205,16 +205,23 @@ $$(".count").forEach((el) => countIO.observe(el));
 /* ---------- projects ---------- */
 (function projects() {
   const wrap = $("#projects");
-  wrap.innerHTML = SITE.projects.map((p) => `
+  wrap.innerHTML = SITE.projects.map((p, i) => `
     <a class="project reveal" href="${esc(p.url)}" data-cat="${esc(p.cat)}">
       <span class="arrow" aria-hidden="true">↗</span>
       <div class="project-media">
         <svg class="art" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="flute${i}" x1="0" x2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+              <stop offset="1" stop-color="#000" stop-opacity=".18"/>
+            </linearGradient>
+            <pattern id="ribs${i}" width="14" height="200" patternUnits="userSpaceOnUse"><rect width="14" height="200" fill="url(#flute${i})"/></pattern>
+          </defs>
           <rect width="320" height="200" fill="${p.art[0]}"/>
-          <circle cx="246" cy="64" r="22" fill="#c9a14a"/>
-          <path d="M28 200V112a82 82 0 0 1 164 0v88" fill="none" stroke="#c9a14a" stroke-width="1.5"/>
-          <path d="M40 200V120a70 70 0 0 1 140 0v80z" fill="${p.art[1]}"/>
-          <path d="M150 200v-50a45 45 0 0 1 90 0v50z" fill="${p.art[2]}" opacity=".55"/>
+          <rect width="320" height="200" fill="url(#ribs${i})"/>
+          <ellipse cx="160" cy="100" rx="52" ry="68" fill="none" stroke="#c9a14a" stroke-width="2.5"/>
+          <ellipse cx="160" cy="100" rx="45" ry="61" fill="${p.art[1]}"/>
+          <ellipse cx="160" cy="100" rx="30" ry="44" fill="${p.art[2]}" opacity=".5"/>
         </svg>
       </div>
       <div class="project-body">
