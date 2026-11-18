@@ -211,7 +211,8 @@ $$(".count").forEach((el) => countIO.observe(el));
       <div class="project-media">
         <svg class="art" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <rect width="320" height="200" fill="${p.art[0]}"/>
-          <path d="M240 34 L247 66 L274 72 L247 78 L240 110 L233 78 L206 72 L233 66 Z" fill="#c9a14a"/>
+          <circle cx="246" cy="64" r="22" fill="#c9a14a"/>
+          <path d="M28 200V112a82 82 0 0 1 164 0v88" fill="none" stroke="#c9a14a" stroke-width="1.5"/>
           <path d="M40 200V120a70 70 0 0 1 140 0v80z" fill="${p.art[1]}"/>
           <path d="M150 200v-50a45 45 0 0 1 90 0v50z" fill="${p.art[2]}" opacity=".55"/>
         </svg>

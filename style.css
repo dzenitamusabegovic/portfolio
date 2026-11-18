@@ -83,7 +83,7 @@ kbd {
 .brand-mark {
   font-family: var(--serif); font-size: 1.35rem; font-style: italic; letter-spacing: -.02em; color: var(--fg);
 }
-.brand-mark::after { content: "✦"; color: var(--clay); font-size: .7em; margin-left: 2px; vertical-align: super; font-style: normal; }
+.brand-mark::after { content: "."; color: var(--clay); font-style: normal; }
 .nav-links { display: flex; gap: 28px; }
 .nav-links a { font-size: .9rem; color: var(--muted); position: relative; transition: color .2s; }
 .nav-links a::after {
@@ -117,9 +117,10 @@ kbd {
 .hero-shape .a1 { fill: var(--sage); opacity: .9; }
 .hero-shape .a2 { fill: #7a2238; }
 .hero-shape .a3 { fill: var(--rose); opacity: .9; }
-.hero-shape .star { fill: var(--clay); transform-box: fill-box; transform-origin: center; animation: twinkle 6s ease-in-out infinite; }
-.hero-shape .star.s2 { animation-delay: -3s; }
-@keyframes twinkle { 50% { transform: rotate(20deg) scale(.88); } }
+.hero-shape { overflow: visible; }
+.hero-shape .gold-line { fill: none; stroke: var(--clay); stroke-width: 1.5; }
+.hero-shape .gold-sun { fill: var(--clay); animation: drift 10s ease-in-out infinite; }
+@keyframes drift { 50% { transform: translateY(10px); } }
 .status-pill {
   display: inline-flex; align-items: center; gap: 10px; font-size: .85rem; color: var(--muted);
 }
