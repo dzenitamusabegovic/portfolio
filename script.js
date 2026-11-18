@@ -24,10 +24,10 @@ const SITE = {
   ],
 
   projects: [
-    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#5f7a45", "#7a2238", "#d9a5a8"] },
-    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#7a2238", "#3f5a34", "#e9c9c3"] },
-    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#d9a5a8", "#6e2a4f", "#f4e6dc"] },
-    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#3f5a34", "#b8893a", "#e3d3b8"] },
+    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#7a2238", "#d9a5a8"] },
+    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#5f7a45", "#2f4a2c"] },
+    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#d9a5a8", "#7a2238"] },
+    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#6e2a4f", "#c9a14a"] },
   ],
 
   experience: [
@@ -205,24 +205,11 @@ $$(".count").forEach((el) => countIO.observe(el));
 /* ---------- projects ---------- */
 (function projects() {
   const wrap = $("#projects");
-  wrap.innerHTML = SITE.projects.map((p, i) => `
+  wrap.innerHTML = SITE.projects.map((p) => `
     <a class="project reveal" href="${esc(p.url)}" data-cat="${esc(p.cat)}">
       <span class="arrow" aria-hidden="true">↗</span>
       <div class="project-media">
-        <svg class="art" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="flute${i}" x1="0" x2="1">
-              <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
-              <stop offset="1" stop-color="#000" stop-opacity=".18"/>
-            </linearGradient>
-            <pattern id="ribs${i}" width="14" height="200" patternUnits="userSpaceOnUse"><rect width="14" height="200" fill="url(#flute${i})"/></pattern>
-          </defs>
-          <rect width="320" height="200" fill="${p.art[0]}"/>
-          <rect width="320" height="200" fill="url(#ribs${i})"/>
-          <ellipse cx="160" cy="100" rx="52" ry="68" fill="none" stroke="#c9a14a" stroke-width="2.5"/>
-          <ellipse cx="160" cy="100" rx="45" ry="61" fill="${p.art[1]}"/>
-          <ellipse cx="160" cy="100" rx="30" ry="44" fill="${p.art[2]}" opacity=".5"/>
-        </svg>
+        <div class="art" data-damask="${p.art[1]},.5" style="background-color:${p.art[0]}"></div>
       </div>
       <div class="project-body">
         <div class="project-top"><h3>${esc(p.title)}</h3><span class="year">${esc(p.year)}</span></div>
@@ -266,6 +253,33 @@ const ICONS = {
   file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>',
 };
 $("#socials").innerHTML = SITE.socials.map((s) => `<a class="social" href="${esc(s.url)}" target="_blank" rel="noopener">${ICONS[s.icon] || ""}${esc(s.label)}</a>`).join("");
+
+/* ---------- damask pattern ---------- */
+function damaskTile(fg, op) {
+  const half = `
+    <path d="M2 -6 C16 -22 34 -16 33 0 C32 13 17 15 13 6 C20 9 25 4 23 -2 C19 -11 9 -8 2 -6Z"/>
+    <path d="M3 -38 C11 -50 24 -50 27 -41 C18 -38 10 -37 3 -38Z"/>
+    <path d="M4 26 C15 25 25 35 24 47 C14 44 7 37 4 26Z"/>
+    <path d="M3 10 C10 12 15 18 14 24 C9 21 5 16 3 10Z"/>
+    <circle cx="26" cy="-27" r="2.6"/><circle cx="32" cy="-20" r="1.8"/><circle cx="31" cy="20" r="2"/>`;
+  const motif = `
+    <path d="M0 -54 C11 -34 13 -12 0 -2 C-13 -12 -11 -34 0 -54Z"/>
+    <path d="M0 2 C15 9 17 28 0 44 C-17 28 -15 9 0 2Z"/>
+    <path d="M0 46 C4 50 4 56 0 60 C-4 56 -4 50 0 46Z"/>
+    <g>${half}</g><g transform="scale(-1,1)">${half}</g>`;
+  const flower = `<g><ellipse rx="3" ry="7" cy="-6"/><ellipse rx="3" ry="7" cy="6"/><ellipse rx="7" ry="3" cx="-6"/><ellipse rx="7" ry="3" cx="6"/><circle r="2"/></g>`;
+  const m = (x, y, k) => `<g transform="translate(${x} ${y}) scale(${k})">${motif}</g>`;
+  const f = (x, y) => `<g transform="translate(${x} ${y}) scale(.5)">${flower}</g>`;
+  const vine = `<path d="M48 0 C64 18 64 40 80 54 C88 61 96 64 96 72 C96 80 88 83 80 90 C64 104 64 126 48 144 C32 126 32 104 16 90 C8 83 0 80 0 72 C0 64 8 61 16 54 C32 40 32 18 48 0Z" fill="none" stroke="${fg}" stroke-opacity="${op * .8}" stroke-width="1.4"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="144" viewBox="0 0 96 144">${vine}<g fill="${fg}" fill-opacity="${op}">
+    ${m(48, 70, .62)}${m(0, -2, .62)}${m(96, -2, .62)}${m(0, 142, .62)}${m(96, 142, .62)}
+    ${f(0, 72)}${f(96, 72)}${f(48, 0)}${f(48, 144)}
+  </g></svg>`;
+}
+$$("[data-damask]").forEach((el) => {
+  const [fg, op] = el.dataset.damask.split(",");
+  el.style.backgroundImage = `url('data:image/svg+xml,${encodeURIComponent(damaskTile(fg, +op))}')`;
+});
 
 observeReveals();
 
