@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,11 @@
   <meta property="og:title" content="Dzenita Musabegovic">
   <meta property="og:description" content="Selected work, experience and contact.">
   <meta property="og:url" content="https://dzenitamusabegovic.com">
-  <meta name="theme-color" content="#0b0b10">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%237c5cff'/><text x='50%25' y='56%25' font-family='Arial' font-weight='700' font-size='26' fill='white' text-anchor='middle' dominant-baseline='middle'>DM</text></svg>">
+  <meta name="theme-color" content="#f4efe6">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23b5643c'/><text x='50%25' y='56%25' font-family='Arial' font-weight='700' font-size='26' fill='white' text-anchor='middle' dominant-baseline='middle'>DM</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
     try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
@@ -20,9 +20,7 @@
 </head>
 <body>
   <div class="progress" aria-hidden="true"></div>
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <div class="bg-orbs" aria-hidden="true"><span></span><span></span><span></span></div>
-  <div class="noise" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
   <header class="nav">
     <a href="#top" class="brand" aria-label="Home"><span class="brand-mark">DM</span></a>
@@ -44,12 +42,16 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
-      <canvas id="dots" aria-hidden="true"></canvas>
+      <svg class="hero-shape" viewBox="0 0 400 400" aria-hidden="true">
+        <path class="arch a1" d="M60 400V200a140 140 0 0 1 280 0v200z"/>
+        <circle class="sun" cx="290" cy="120" r="46"/>
+        <path class="arch a2" d="M140 400V260a60 60 0 0 1 120 0v140z"/>
+      </svg>
       <div class="hero-inner">
         <a href="#contact" class="status-pill reveal"><span class="pulse"></span><span id="statusText">Open to new opportunities</span></a>
         <h1 class="hero-title reveal">
           <span class="line">Dzenita</span>
-          <span class="line serif"><em>Musabegovic</em></span>
+          <span class="line"><em>Musabegovic</em></span>
         </h1>
         <p class="hero-sub reveal">
           <span class="typed-prefix">I'm a</span>

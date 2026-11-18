@@ -18,16 +18,16 @@ const SITE = {
   ],
 
   toolkit: [
-    ["Placeholder", "#7c5cff"], ["Skill two", "#22d3ee"], ["Skill three", "#f472b6"],
-    ["Tool four", "#f59e0b"], ["Tool five", "#22c55e"], ["Skill six", "#60a5fa"],
-    ["Tool seven", "#e879f9"], ["Skill eight", "#fb7185"],
+    ["Placeholder", "#b5643c"], ["Skill two", "#7d8a6a"], ["Skill three", "#c99a6b"],
+    ["Tool four", "#5f6b4a"], ["Tool five", "#9c6b4e"], ["Skill six", "#a8a07a"],
+    ["Tool seven", "#8a5a44"], ["Skill eight", "#6f7d6b"],
   ],
 
   projects: [
-    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", hue: 260 },
-    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", hue: 190 },
-    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", hue: 330 },
-    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", hue: 30 },
+    { title: "Project One", year: "2026", cat: "Design", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#c9a27e", "#b5643c", "#efe3d0"] },
+    { title: "Project Two", year: "2025", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#9aa386", "#5f6b4a", "#e8e4d4"] },
+    { title: "Project Three", year: "2025", cat: "Research", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#d8b48c", "#8a5a44", "#f3e7d3"] },
+    { title: "Project Four", year: "2024", cat: "Development", desc: "Placeholder: one or two lines on the problem, your role and the outcome.", tags: ["Tag", "Tag"], url: "#", art: ["#7d6a58", "#c99a6b", "#e9dcc7"] },
   ],
 
   experience: [
@@ -76,7 +76,7 @@ function toggleTheme() {
   const next = root.dataset.theme === "light" ? "dark" : "light";
   root.dataset.theme = next;
   try { localStorage.setItem("theme", next); } catch {}
-  document.querySelector('meta[name="theme-color"]').content = next === "light" ? "#f7f6f3" : "#0b0b10";
+  document.querySelector('meta[name="theme-color"]').content = next === "light" ? "#f4efe6" : "#1c1815";
 }
 $("#themeToggle").addEventListener("click", toggleTheme);
 
@@ -101,6 +101,7 @@ const prog = $(".progress");
 const navLinks = $$(".nav-links a");
 function onScroll() {
   const h = document.documentElement;
+  $(".nav").classList.toggle("scrolled", h.scrollTop > 20);
   prog.style.transform = `scaleX(${h.scrollTop / (h.scrollHeight - h.clientHeight || 1)})`;
   let current = "";
   $$("main section[id]").forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * 0.4) current = s.id; });
@@ -115,12 +116,7 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 function observeReveals() { $$(".reveal:not(.in)").forEach((el, i) => { el.style.transitionDelay = `${(i % 6) * 60}ms`; io.observe(el); }); }
 
-/* ---------- cursor glow + spotlight tiles ---------- */
-const glow = $(".cursor-glow");
-addEventListener("pointermove", (e) => {
-  glow.style.left = e.clientX + "px";
-  glow.style.top = e.clientY + "px";
-}, { passive: true });
+/* ---------- spotlight tiles ---------- */
 document.addEventListener("pointermove", (e) => {
   const t = e.target.closest(".spotlight");
   if (!t) return;
@@ -135,45 +131,11 @@ if (!reduced && matchMedia("(hover: hover)").matches) {
     b.addEventListener("pointermove", (e) => {
       const r = b.getBoundingClientRect();
       const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
-      b.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+      b.style.transform = `translate(${x * 0.12}px, ${y * 0.18}px)`;
     });
     b.addEventListener("pointerleave", () => (b.style.transform = ""));
   });
 }
-
-/* ---------- interactive dot grid (hero) ---------- */
-(function dots() {
-  const c = $("#dots"), ctx = c.getContext("2d");
-  let w, h, pts = [], mouse = { x: -9999, y: -9999 }, dpr = Math.min(devicePixelRatio || 1, 2);
-  const GAP = 28;
-  function resize() {
-    w = c.clientWidth; h = c.clientHeight;
-    c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    pts = [];
-    for (let y = GAP / 2; y < h; y += GAP) for (let x = GAP / 2; x < w; x += GAP) pts.push({ x, y });
-    if (reduced) draw();
-  }
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    const light = document.documentElement.dataset.theme === "light";
-    const t = performance.now() / 1000;
-    for (const p of pts) {
-      const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.hypot(dx, dy);
-      const f = Math.max(0, 1 - d / 160);
-      const wave = reduced ? 0 : Math.sin(p.x * 0.012 + p.y * 0.01 + t * 1.2) * 0.5 + 0.5;
-      const px = p.x + (d ? (dx / d) * f * 14 : 0), py = p.y + (d ? (dy / d) * f * 14 : 0);
-      const r = 1 + f * 2.2;
-      const a = 0.12 + wave * 0.12 + f * 0.7;
-      ctx.fillStyle = f > 0.02 ? `rgba(124,92,255,${a})` : light ? `rgba(20,20,30,${a * 0.8})` : `rgba(255,255,255,${a})`;
-      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill();
-    }
-    if (!reduced) requestAnimationFrame(draw);
-  }
-  c.parentElement.addEventListener("pointermove", (e) => { const r = c.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
-  c.parentElement.addEventListener("pointerleave", () => { mouse.x = mouse.y = -9999; });
-  addEventListener("resize", resize);
-  resize(); if (!reduced) requestAnimationFrame(draw);
-})();
 
 /* ---------- clock widget ---------- */
 (function clock() {
@@ -247,11 +209,12 @@ $$(".count").forEach((el) => countIO.observe(el));
     <a class="project reveal" href="${esc(p.url)}" data-cat="${esc(p.cat)}">
       <span class="arrow" aria-hidden="true">↗</span>
       <div class="project-media">
-        <div class="art" style="background:
-          radial-gradient(circle at 20% 20%, hsl(${p.hue} 90% 65%), transparent 55%),
-          radial-gradient(circle at 80% 70%, hsl(${(p.hue + 60) % 360} 90% 60%), transparent 55%),
-          linear-gradient(135deg, hsl(${p.hue} 70% 35%), hsl(${(p.hue + 40) % 360} 70% 25%));"></div>
-        <div class="mock"><div class="bar"><i></i><i></i><i></i></div><div class="body"><span></span><span></span></div></div>
+        <svg class="art" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="320" height="200" fill="${p.art[0]}"/>
+          <circle cx="235" cy="70" r="34" fill="${p.art[2]}" opacity=".85"/>
+          <path d="M40 200V120a70 70 0 0 1 140 0v80z" fill="${p.art[1]}"/>
+          <path d="M150 200v-50a45 45 0 0 1 90 0v50z" fill="${p.art[2]}" opacity=".55"/>
+        </svg>
       </div>
       <div class="project-body">
         <div class="project-top"><h3>${esc(p.title)}</h3><span class="year">${esc(p.year)}</span></div>
@@ -273,7 +236,7 @@ $$(".count").forEach((el) => countIO.observe(el));
       card.addEventListener("pointermove", (e) => {
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
+        card.style.transform = `rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateY(-3px)`;
       });
       card.addEventListener("pointerleave", () => (card.style.transform = ""));
     });
@@ -338,7 +301,7 @@ observeReveals();
     else if (e.key === "Enter") { e.preventDefault(); run(sel); }
   });
   if (!/Mac|iPhone|iPad/.test(navigator.platform)) {
-    $("#openPalette").innerHTML = "<span>Ctrl</span>&nbsp;K";
+    $("#openPalette").innerHTML = "Ctrl&nbsp;K";
     $$(".footer kbd")[0].textContent = "Ctrl";
   }
 })();
